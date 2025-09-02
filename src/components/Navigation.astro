@@ -1,16 +1,19 @@
 ---
+const currentPath = Astro.url.pathname;
+
 const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#work", label: "Work" },
-  { href: "#writing", label: "Writing" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" }
+  { href: currentPath === "/" ? "#home" : "/", label: "Home" },
+  { href: currentPath === "/" ? "#work" : "/#work", label: "Work" },
+  { href: currentPath === "/" ? "#writing" : "/#writing", label: "Writing" },
+  { href: currentPath === "/" ? "#contact" : "/#contact", label: "Contact" }
 ];
 ---
 
 <nav>
   <div class="nav-container">
-    <div class="logo">AA</div>
+    <div class="logo">
+      <img src="/dove.svg" alt="Dove Logo" width="32" height="32" />
+    </div>
     <ul class="nav-links">
       {navItems.map(item => (
         <li><a href={item.href}>{item.label}</a></li>
@@ -41,12 +44,19 @@ const navItems = [
   }
 
   .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: glow 3s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo img {
+    filter: drop-shadow(0 0 8px rgba(107, 126, 55, 0.6));
+    transition: all 0.3s ease;
+  }
+
+  .logo img:hover {
+    filter: drop-shadow(0 0 12px rgba(107, 126, 55, 0.8));
+    transform: scale(1.1);
   }
 
   .nav-links {

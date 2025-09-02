@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Learn Meditation - Aditya Aswani" description="Get personalized meditation guidance from Aditya on a donation basis.">
+  <Navigation />
+  <main class="meditation-page">
+    <article class="content">
+      <header class="page-header">
+        <h1>Learn Meditation</h1>
+        <p class="lead">Get personalized meditation guidance from Aditya on a donation basis.</p>
+      </header>
+
+      <div class="prose">
+        <p>Have you been looking for one-on-one guidance for meditation? If so, then read on.</p>
+
+        <section>
+          <h2>Who I Can Teach</h2>
+          <p>If you consider yourself a complete beginner/relatively new to meditation, then I can offer you guidance. Please note that I am relatively new to teaching so my guidance may be most helpful to those newer to the practice.</p>
+        </section>
+
+        <section>
+          <h2>My Background</h2>
+          <p>I have been meditating for about three years now and I have done several silent meditation retreats. My shortest retreat was four days and my longest was three weeks. Most of my retreats were at the Insight Meditation Society, in Barre, MA.</p>
+          <p>Most recently, I was a monk for three months in Malaysia. I practiced there in the Theravada Buddhist tradition.</p>
+        </section>
+
+        <section>
+          <h2>What I Teach</h2>
+          <p>I feel comfortable explaining several topics from Buddhist meditation practice, including (but not limited to) the following:</p>
+          <ul>
+            <li>The Four Foundations of Mindfulness</li>
+            <li>Mindfulness of Breathing</li>
+            <li>The Eightfold Path</li>
+            <li>The Four Noble Truths</li>
+            <li>The Divine Abodes</li>
+          </ul>
+          <p>Please note I primarily have learned from a Theravada/Early Buddhist perspective so I am not able to speak much about Mahayana Buddhist practices.</p>
+          <p>I aim to follow the approach of Motivational Interviewing, where I see myself less as a teacher who leads from the front, and more as a spiritual friend who walks alongside you, offering guidance to help you reach your goals using your own inner resources.</p>
+        </section>
+
+        <section>
+          <h2>Cost</h2>
+          <p>As is traditional, I offer these teachings free of charge. After a session, please consider giving me a donation of whatever amount you're able to give. Please don't hesitate to reach out regardless of your ability to donate.</p>
+        </section>
+
+        <section>
+          <h2>Format</h2>
+          <p>Sessions will be for 50 minutes and will usually take place online via Zoom. If you are based in NYC, please let me know if you would be interested in in-person sessions.</p>
+          <p>If we are meeting for the first time, the session will primarily be focused on getting to know one another and setting shared goals.</p>
+          <p>In follow-up sessions, we'll explore how your practice has developed since we last met and address any challenges or insights that have arisen. These sessions are primarily guided by your questions, though if you don't have any questions, I'm happy to offer some Buddhist teachings that would be relevant to the current stage of your practice.</p>
+          <p>Furthermore, between sessions, I may suggest some practice goals, such as a certain number of meditation minutes or relevant readings.</p>
+        </section>
+
+        <section>
+          <h2>Scheduling</h2>
+          <p>My schedule is quite open so feel free to find a time that works for you on this link <a href="https://cal.com/adityaa" target="_blank" rel="noopener noreferrer">here</a>.</p>
+        </section>
+
+        <section>
+          <h2>Questions</h2>
+          <p>If you are not yet ready to schedule, but simply have questions, you can find a link to my contact page <a href="/#contact">here</a>.</p>
+        </section>
+
+        <section>
+          <h2>Feedback</h2>
+          <p>If you have any feedback for me, feel free to send it to me <a href="/#contact">here</a>.</p>
+        </section>
+
+        <hr>
+        
+        <div class="closing">
+          <p><em>I look forward to meeting with you :)</em></p>
+          <p><em>May all beings be happy, healthy, and safe.</em></p>
+        </div>
+
+        <div class="cta-section">
+          <a href="https://cal.com/adityaa" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Schedule a Session
+          </a>
+          <a href="/#contact" class="btn btn-secondary">
+            Ask Questions
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .meditation-page {
+    min-height: 100vh;
+    padding-top: calc(2rem + 80px); /* Account for fixed navbar */
+  }
+
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .prose {
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .prose section {
+    margin-bottom: 2.5rem;
+  }
+
+  .prose h2 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose a {
+    color: var(--accent-hover);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .prose a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  .closing {
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 3rem;
+  }
+
+  .cta-section {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+  }
+
+  .btn {
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+  }
+
+  .btn-secondary {
+    border: 2px solid var(--border);
+    color: var(--text-primary);
+    background: transparent;
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .meditation-page {
+      padding-top: calc(1rem + 90px);
+    }
+    
+    .content {
+      padding: 1rem;
+    }
+    
+    .cta-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
