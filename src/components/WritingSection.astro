@@ -1,0 +1,198 @@
+---
+// OPTION 1: Fetch from Substack RSS Feed
+// Replace 'your-substack-url' with your actual Substack subdomain
+const SUBSTACK_URL = 'adityaaswani'; // adityaaswani.substack.com
+
+let posts = [];
+
+try {
+  // Fetch RSS feed at build time
+  const response = await fetch(`https://${SUBSTACK_URL}.substack.com/feed`);
+  const text = await response.text();
+  
+  // Parse RSS (you'll need to install fast-xml-parser: npm install fast-xml-parser)
+  const { XMLParser } = await import('fast-xml-parser');
+  const parser = new XMLParser();
+  const result = parser.parse(text);
+  
+  // Extract posts from RSS
+  const items = result.rss?.channel?.item || [];
+  posts = items.slice(0, 5).map(item => ({
+    title: item.title,
+    link: item.link,
+    date: new Date(item.pubDate).toLocaleDateString('en-US', { 
+      month: 'long', 
+      year: 'numeric' 
+    }),
+    description: item.description?.substring(0, 150) + '...'
+  }));
+} catch (error) {
+  console.error('Error fetching Substack posts:', error);
+  // Fallback posts if RSS fetch fails
+  posts = [
+    {
+      title: "The Art of Digital Minimalism",
+      date: "December 2024",
+      link: "#",
+      description: "Exploring how less can be more in our digital lives..."
+    }
+  ];
+}
+
+// OPTION 2: If you prefer to use Substack's embed widget instead, 
+// comment out the above and use this in the HTML below:
+// <iframe src="https://YOUR-SUBSTACK-URL.substack.com/embed" width="100%" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
+---
+
+<section id="writing" class="fade-in">
+  <h2 class="section-title">Recent Writing</h2>
+  <p class="section-subtitle">Thoughts on technology, mindfulness, and everything in between</p>
+  
+  <!-- Option 1: Dynamic RSS Feed Posts -->
+  <div class="writing-list">
+    {posts.map(post => (
+      <a href={post.link} class="writing-item" target="_blank" rel="noopener noreferrer">
+        <div>
+          <h3>{post.title}</h3>
+          <span class="date">{post.date}</span>
+          {post.description && <p class="description">{post.description}</p>}
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    ))}
+  </div>
+  
+  <!-- Option 2: Substack Embed Widget (uncomment to use) -->
+  <!-- 
+  <div class="substack-embed">
+    <iframe 
+      src="https://YOUR-SUBSTACK-URL.substack.com/embed" 
+      width="100%" 
+      height="320" 
+      frameborder="0" 
+      scrolling="no"
+    ></iframe>
+  </div>
+  -->
+  
+  <div class="view-all">
+    <a href={`https://${SUBSTACK_URL}.substack.com`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      View All Posts on Substack →
+    </a>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+  }
+
+  .writing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .writing-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .writing-item:hover {
+    border-color: var(--accent);
+    transform: translateX(10px);
+  }
+
+  .writing-item h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .date {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .description {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .arrow {
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .writing-item:hover .arrow {
+    transform: translateX(5px);
+  }
+
+  .view-all {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .btn-secondary {
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid var(--border);
+    color: var(--text-primary);
+    background: transparent;
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+  }
+
+  /* Substack embed styles if using Option 2 */
+  .substack-embed {
+    margin-top: 2rem;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .substack-embed iframe {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 15px;
+  }
+</style>

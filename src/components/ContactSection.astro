@@ -1,0 +1,76 @@
+---
+const contactInfo = [
+  { name: "Email", url: "mailto:hello@adityaaswani.com", icon: "email" }
+];
+---
+
+<section id="contact" class="fade-in">
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="contact-content">
+    <p class="section-subtitle">I'm always interested in meaningful conversations and collaborations</p>
+    <div class="contact-links">
+      {contactInfo.map(contact => (
+        <a href={contact.url} title={contact.name} class="contact-button">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z"/>
+          </svg>
+          <span>Get In Touch</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .contact-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .contact-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  }
+
+  .contact-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+  }
+</style>

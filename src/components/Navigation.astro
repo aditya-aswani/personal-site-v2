@@ -1,0 +1,170 @@
+---
+const navItems = [
+  { href: "#home", label: "Home" },
+  { href: "#work", label: "Work" },
+  { href: "#writing", label: "Writing" },
+  { href: "#about", label: "About" },
+  { href: "#contact", label: "Contact" }
+];
+---
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">AA</div>
+    <ul class="nav-links">
+      {navItems.map(item => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+    <button class="mobile-menu">☰</button>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent-hover);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      padding: 1rem 2rem;
+      gap: 1rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(-10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Dynamic navigation background
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      nav.style.background = 'rgba(10, 10, 10, 0.95)';
+      nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+    } else {
+      nav.style.background = 'rgba(10, 10, 10, 0.8)';
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      
+      // Change hamburger icon when open
+      if (navLinks.classList.contains('active')) {
+        mobileMenuBtn.textContent = '✕';
+      } else {
+        mobileMenuBtn.textContent = '☰';
+      }
+    });
+    
+    // Close menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileMenuBtn.textContent = '☰';
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('nav')) {
+        navLinks.classList.remove('active');
+        mobileMenuBtn.textContent = '☰';
+      }
+    });
+  });
+</script>

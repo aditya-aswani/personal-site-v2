@@ -1,0 +1,17 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <p>&copy; {currentYear} Aditya Aswani. Built with Astro and lots of ☕</p>
+</footer>
+
+<style>
+  footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+  }
+</style>
