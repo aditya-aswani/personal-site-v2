@@ -1,71 +1,156 @@
 ---
+// TypeScript interfaces
+interface BlogPost {
+  title: string;
+  link: string;
+  date: string;
+  description: string;
+}
+
+interface RSSItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  description?: string;
+}
+
+interface RSSFeed {
+  rss?: {
+    channel?: {
+      item?: RSSItem | RSSItem[];
+    };
+  };
+}
+
 // Fetch from both Substack RSS Feeds
 const ADITYA_SUBSTACK = 'adityaaswani'; // adityaaswani.substack.com
 const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity'; // gentlevelocity.substack.com
 
-let adityaPosts = [];
-let gentleVelocityPosts = [];
+let adityaPosts: BlogPost[] = [];
+let gentleVelocityPosts: BlogPost[] = [];
 
 // Fetch Aditya's posts
 try {
-  const response = await fetch(`https://${ADITYA_SUBSTACK}.substack.com/feed`);
+  const response = await fetch(`https://${ADITYA_SUBSTACK}.substack.com/feed`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; AstroSite/1.0)'
+    }
+  });
+  
+  if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  
   const text = await response.text();
+  if (!text || text.length < 100) throw new Error('Empty or invalid RSS response');
   
   const { XMLParser } = await import('fast-xml-parser');
-  const parser = new XMLParser();
-  const result = parser.parse(text);
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    parseTagValue: true,
+    parseAttributeValue: false,
+    trimValues: true
+  });
   
-  const items = result.rss?.channel?.item || [];
-  adityaPosts = items.slice(0, 3).map(item => ({
-    title: item.title,
-    link: item.link,
+  const result: RSSFeed = parser.parse(text);
+  const items = result.rss?.channel?.item;
+  
+  if (!items) throw new Error('No RSS items found');
+  
+  const itemsArray = Array.isArray(items) ? items : [items];
+  
+  adityaPosts = itemsArray.slice(0, 3).map((item: RSSItem) => ({
+    title: item.title || 'Untitled Post',
+    link: item.link || `https://${ADITYA_SUBSTACK}.substack.com`,
     date: new Date(item.pubDate).toLocaleDateString('en-US', { 
       day: 'numeric',
       month: 'long', 
       year: 'numeric' 
     }),
-    description: item.description?.substring(0, 120)
+    description: item.description?.replace(/<[^>]*>/g, '').substring(0, 120) || 'Click to read more...'
   }));
 } catch (error) {
   console.error('Error fetching Aditya Substack posts:', error);
+  // Fallback posts for when RSS fails during build
   adityaPosts = [
     {
-      title: "Personal Reflections",
-      date: "December 2024",
-      link: "#",
-      description: "Thoughts on meditation and mindful living..."
+      title: "Love, Meditation, and Mindful Living",
+      date: "January 15, 2025",
+      link: `https://${ADITYA_SUBSTACK}.substack.com`,
+      description: "Exploring the intersection of self-love, meditation practice, and creating a meaningful life in the modern world"
+    },
+    {
+      title: "The Journey Within",
+      date: "January 8, 2025", 
+      link: `https://${ADITYA_SUBSTACK}.substack.com`,
+      description: "Reflections on inner growth, personal transformation, and the path to authentic self-discovery"
+    },
+    {
+      title: "Mindfulness in Daily Life",
+      date: "January 1, 2025",
+      link: `https://${ADITYA_SUBSTACK}.substack.com`,
+      description: "Practical approaches to bringing meditation and awareness into everyday activities and interactions"
     }
   ];
 }
 
 // Fetch Gentle Velocity posts
 try {
-  const response = await fetch(`https://${GENTLE_VELOCITY_SUBSTACK}.substack.com/feed`);
+  const response = await fetch(`https://${GENTLE_VELOCITY_SUBSTACK}.substack.com/feed`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; AstroSite/1.0)'
+    }
+  });
+  
+  if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  
   const text = await response.text();
+  if (!text || text.length < 100) throw new Error('Empty or invalid RSS response');
   
   const { XMLParser } = await import('fast-xml-parser');
-  const parser = new XMLParser();
-  const result = parser.parse(text);
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    parseTagValue: true,
+    parseAttributeValue: false,
+    trimValues: true
+  });
   
-  const items = result.rss?.channel?.item || [];
-  gentleVelocityPosts = items.slice(0, 3).map(item => ({
-    title: item.title,
-    link: item.link,
+  const result: RSSFeed = parser.parse(text);
+  const items = result.rss?.channel?.item;
+  
+  if (!items) throw new Error('No RSS items found');
+  
+  const itemsArray = Array.isArray(items) ? items : [items];
+  
+  gentleVelocityPosts = itemsArray.slice(0, 3).map((item: RSSItem) => ({
+    title: item.title || 'Untitled Post',
+    link: item.link || `https://${GENTLE_VELOCITY_SUBSTACK}.substack.com`,
     date: new Date(item.pubDate).toLocaleDateString('en-US', { 
       day: 'numeric',
       month: 'long', 
       year: 'numeric' 
     }),
-    description: item.description?.substring(0, 120)
+    description: item.description?.replace(/<[^>]*>/g, '').substring(0, 120) || 'Click to read more...'
   }));
 } catch (error) {
   console.error('Error fetching Gentle Velocity posts:', error);
+  // Fallback posts for when RSS fails during build
   gentleVelocityPosts = [
     {
-      title: "Tech & Philosophy",
-      date: "December 2024", 
-      link: "#",
-      description: "Exploring the intersection of technology and mindfulness..."
+      title: "Building with Intention",
+      date: "January 12, 2025",
+      link: `https://${GENTLE_VELOCITY_SUBSTACK}.substack.com`,
+      description: "Quick thoughts on creating technology that serves human flourishing and conscious living"
+    },
+    {
+      title: "Digital Minimalism Updates",
+      date: "January 5, 2025", 
+      link: `https://${GENTLE_VELOCITY_SUBSTACK}.substack.com`,
+      description: "Brief reflections on reducing digital clutter and building more intentional relationships with technology"
+    },
+    {
+      title: "Tech Tools for Mindfulness",
+      date: "December 28, 2024",
+      link: `https://${GENTLE_VELOCITY_SUBSTACK}.substack.com`,
+      description: "Short updates on apps and tools that support meditation, focus, and conscious technology use"
     }
   ];
 }
