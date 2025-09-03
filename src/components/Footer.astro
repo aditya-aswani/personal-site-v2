@@ -3,7 +3,8 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer>
-  <p>&copy; {currentYear} Aditya Aswani. Built with Astro and lots of ☕</p>
+  <p class="blessing">May all beings be happy, healthy, and safe.</p>
+  <p class="copyright">&copy; {currentYear} Aditya Aswani. Built with Astro and lots of ☕</p>
 </footer>
 
 <style>
@@ -13,5 +14,16 @@ const currentYear = new Date().getFullYear();
     border-top: 1px solid var(--border);
     color: var(--text-secondary);
     background: var(--bg-primary);
+  }
+
+  .blessing {
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .copyright {
+    margin: 0;
   }
 </style>

@@ -10,7 +10,7 @@ import Footer from '../components/Footer.astro';
     <article class="content">
       <header class="page-header">
         <h1>Learn Meditation</h1>
-        <p class="lead">Get personalized meditation guidance from Aditya on a donation basis.</p>
+        <p class="lead">Get personalized meditation guidance on a donation basis.</p>
       </header>
 
       <div class="prose">
@@ -61,26 +61,25 @@ import Footer from '../components/Footer.astro';
 
         <section>
           <h2>Questions</h2>
-          <p>If you are not yet ready to schedule, but simply have questions, you can find a link to my contact page <a href="/#contact">here</a>.</p>
+          <p>If you are not yet ready to schedule, but simply have questions, you can find a link to my contact page <a href="/contact">here</a>.</p>
         </section>
 
         <section>
           <h2>Feedback</h2>
-          <p>If you have any feedback for me, feel free to send it to me <a href="/#contact">here</a>.</p>
+          <p>If you have any feedback for me, feel free to send it to me <a href="/contact">here</a>.</p>
         </section>
 
         <hr>
         
         <div class="closing">
-          <p><em>I look forward to meeting with you :)</em></p>
-          <p><em>May all beings be happy, healthy, and safe.</em></p>
+          <p>I look forward to meeting with you :)</p>
         </div>
 
         <div class="cta-section">
           <a href="https://cal.com/adityaa" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             Schedule a Session
           </a>
-          <a href="/#contact" class="btn btn-secondary">
+          <a href="/contact" class="btn btn-secondary">
             Ask Questions
           </a>
         </div>
@@ -169,7 +168,6 @@ import Footer from '../components/Footer.astro';
 
   .closing {
     text-align: center;
-    font-style: italic;
     margin-bottom: 3rem;
   }
 
@@ -192,14 +190,20 @@ import Footer from '../components/Footer.astro';
     gap: 0.5rem;
   }
 
+  .btn:hover {
+    text-decoration: none !important;
+  }
+
   .btn-primary {
     background: var(--accent);
-    color: white;
+    color: #ffffff !important;
+    font-weight: 700;
     box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
   }
 
   .btn-primary:hover {
     background: var(--accent-hover);
+    color: #ffffff !important;
     transform: translateY(-2px);
     box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
   }
