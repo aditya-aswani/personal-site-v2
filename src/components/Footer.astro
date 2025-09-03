@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 <footer>
   <p class="blessing">May all beings be happy, healthy, and safe.</p>
-  <p class="copyright">&copy; {currentYear} Aditya Aswani. Built with Astro and lots of ☕</p>
+  <p class="copyright">&copy; {currentYear} Aditya Aswani. Built with <a href="https://astro.build/">Astro</a> + <a href="https://www.anthropic.com/claude-code">Claude Code</a> and lots of 🧘</p>
 </footer>
 
 <style>
@@ -25,5 +25,15 @@ const currentYear = new Date().getFullYear();
 
   .copyright {
     margin: 0;
+  }
+
+  .copyright a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+
+  .copyright a:hover {
+    color: var(--accent);
   }
 </style>
