@@ -38,7 +38,7 @@ const navItems = [
     background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, background-color 0.3s ease !important;
   }
 
   :root[data-theme="light"] nav {
@@ -221,10 +221,31 @@ const navItems = [
     localStorage.setItem('theme', theme);
   };
 
+  // Update navigation background based on theme and scroll
+  const updateNavBackground = () => {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    
+    const currentScroll = window.pageYOffset;
+    const theme = document.documentElement.getAttribute('data-theme');
+    const isDark = theme === 'dark' || !theme;
+    
+    if (currentScroll > 100) {
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+      nav.style.boxShadow = isDark ? '0 5px 20px rgba(0, 0, 0, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(255, 255, 255, 0.85)';
+      nav.style.boxShadow = 'none';
+    }
+  };
+
   // Initialize theme on page load
   document.addEventListener('DOMContentLoaded', () => {
     const theme = getPreferredTheme();
     setTheme(theme);
+    
+    // Update nav background after theme is set
+    setTimeout(updateNavBackground, 0);
 
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
@@ -233,6 +254,8 @@ const navItems = [
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
+        // Update nav background immediately after theme change
+        setTimeout(updateNavBackground, 0);
       });
     }
 
@@ -271,20 +294,5 @@ const navItems = [
   });
 
   // Dynamic navigation background
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (!nav) return;
-    
-    const currentScroll = window.pageYOffset;
-    const theme = document.documentElement.getAttribute('data-theme');
-    const isDark = theme === 'dark' || !theme;
-    
-    if (currentScroll > 100) {
-      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)';
-      nav.style.boxShadow = isDark ? '0 5px 20px rgba(0, 0, 0, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(255, 255, 255, 0.85)';
-      nav.style.boxShadow = 'none';
-    }
-  });
+  window.addEventListener('scroll', updateNavBackground);
 </script>
