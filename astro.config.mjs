@@ -8,8 +8,8 @@ import tailwind from '@astrojs/tailwind';
 // If using github.io, use: https://[username].github.io/[repo-name]
 
 export default defineConfig({
-  site: 'https://aditya-aswani.github.io', // GitHub Pages URL
-  base: '/personal-site-v2', // Repository name
+  site: 'https://adityaaswani.com', // Custom domain
+  base: '/', // Root domain, no subdirectory
   output: 'static', // Required for GitHub Pages
   integrations: [
     mdx(),
