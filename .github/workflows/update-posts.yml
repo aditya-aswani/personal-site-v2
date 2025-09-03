@@ -1,0 +1,83 @@
+name: Update Blog Posts
+
+on:
+  schedule:
+    # Run daily at 12:00 PM UTC (adjust timezone as needed)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update-posts:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Update blog posts
+        run: node scripts/update-posts.js
+      
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push changes
+        if: steps.changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/components/WritingSection.astro
+          git commit -m "Auto-update blog posts from RSS feeds
+          
+          🤖 Generated with GitHub Actions
+          
+          Co-Authored-By: GitHub Actions <action@github.com>"
+          git push
+      
+      - name: Build site
+        if: steps.changes.outputs.changes == 'true'
+        run: npm run build
+      
+      - name: Setup Pages
+        if: steps.changes.outputs.changes == 'true'
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        if: steps.changes.outputs.changes == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+      
+      - name: Deploy to GitHub Pages
+        if: steps.changes.outputs.changes == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
+      
+      - name: Log results
+        run: |
+          if [ "${{ steps.changes.outputs.changes }}" == "true" ]; then
+            echo "✅ Blog posts updated and site redeployed"
+          else
+            echo "ℹ️  No changes detected, skipping deployment"
+          fi
