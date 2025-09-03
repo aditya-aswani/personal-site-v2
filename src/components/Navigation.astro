@@ -41,6 +41,10 @@ const navItems = [
     transition: all 0.3s ease;
   }
 
+  :root[data-theme="light"] nav {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
   .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -72,10 +76,11 @@ const navItems = [
   }
 
   .nav-links a {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     text-decoration: none;
     transition: color 0.3s ease;
     position: relative;
+    font-weight: 500;
   }
 
   .nav-links a:hover {
@@ -121,6 +126,10 @@ const navItems = [
 
   .theme-toggle:hover {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  :root[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 
   .theme-icon {
@@ -271,10 +280,10 @@ const navItems = [
     const isDark = theme === 'dark' || !theme;
     
     if (currentScroll > 100) {
-      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(248, 249, 250, 0.95)';
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)';
       nav.style.boxShadow = isDark ? '0 5px 20px rgba(0, 0, 0, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)';
     } else {
-      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(248, 249, 250, 0.8)';
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(255, 255, 255, 0.85)';
       nav.style.boxShadow = 'none';
     }
   });
