@@ -19,7 +19,13 @@ const navItems = [
         <li><a href={item.href}>{item.label}</a></li>
       ))}
     </ul>
-    <button class="mobile-menu">☰</button>
+    <div class="nav-controls">
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon dark">🌙</span>
+        <span class="theme-icon light">☀️</span>
+      </button>
+      <button class="mobile-menu">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -91,6 +97,57 @@ const navItems = [
     width: 100%;
   }
 
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .theme-icon {
+    position: absolute;
+    transition: all 0.3s ease;
+  }
+
+  .theme-icon.dark {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .theme-icon.light {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.8);
+  }
+
+  :root[data-theme="light"] .theme-icon.dark {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.8);
+  }
+
+  :root[data-theme="light"] .theme-icon.light {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
   .mobile-menu {
     display: none;
     background: none;
@@ -106,7 +163,7 @@ const navItems = [
       top: 100%;
       left: 0;
       right: 0;
-      background: rgba(10, 10, 10, 0.95);
+      background: var(--bg-primary);
       backdrop-filter: blur(10px);
       flex-direction: column;
       padding: 1rem 2rem;
@@ -116,12 +173,23 @@ const navItems = [
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
+      border: 1px solid var(--border);
     }
     
     .nav-links.active {
       transform: translateY(0);
       opacity: 1;
       visibility: visible;
+    }
+    
+    .nav-controls {
+      gap: 0.5rem;
+    }
+    
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      font-size: 1.1rem;
     }
     
     .mobile-menu {
@@ -131,50 +199,83 @@ const navItems = [
 </style>
 
 <script>
-  // Dynamic navigation background
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-      nav.style.background = 'rgba(10, 10, 10, 0.95)';
-      nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
-    } else {
-      nav.style.background = 'rgba(10, 10, 10, 0.8)';
-      nav.style.boxShadow = 'none';
-    }
-  });
+  // Theme management
+  const getStoredTheme = () => localStorage.getItem('theme');
+  const getPreferredTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) return storedTheme;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  };
 
-  // Mobile menu toggle
+  const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  };
+
+  // Initialize theme on page load
   document.addEventListener('DOMContentLoaded', () => {
+    const theme = getPreferredTheme();
+    setTheme(theme);
+
+    // Theme toggle functionality
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+      });
+    }
+
+    // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
     
-    mobileMenuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      
-      // Change hamburger icon when open
-      if (navLinks.classList.contains('active')) {
-        mobileMenuBtn.textContent = '✕';
-      } else {
-        mobileMenuBtn.textContent = '☰';
-      }
-    });
-    
-    // Close menu when clicking on a link
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        mobileMenuBtn.textContent = '☰';
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        
+        // Change hamburger icon when open
+        if (navLinks.classList.contains('active')) {
+          mobileMenuBtn.textContent = '✕';
+        } else {
+          mobileMenuBtn.textContent = '☰';
+        }
       });
-    });
+      
+      // Close menu when clicking on a link
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          mobileMenuBtn.textContent = '☰';
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          navLinks.classList.remove('active');
+          mobileMenuBtn.textContent = '☰';
+        }
+      });
+    }
+  });
+
+  // Dynamic navigation background
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
     
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('nav')) {
-        navLinks.classList.remove('active');
-        mobileMenuBtn.textContent = '☰';
-      }
-    });
+    const currentScroll = window.pageYOffset;
+    const theme = document.documentElement.getAttribute('data-theme');
+    const isDark = theme === 'dark' || !theme;
+    
+    if (currentScroll > 100) {
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(248, 249, 250, 0.95)';
+      nav.style.boxShadow = isDark ? '0 5px 20px rgba(0, 0, 0, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+      nav.style.background = isDark ? 'rgba(10, 10, 10, 0.8)' : 'rgba(248, 249, 250, 0.8)';
+      nav.style.boxShadow = 'none';
+    }
   });
 </script>
