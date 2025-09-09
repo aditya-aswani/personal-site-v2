@@ -11,13 +11,24 @@ const __dirname = path.dirname(__filename);
 const ADITYA_SUBSTACK = 'adityaaswani';
 const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity';
 
-async function fetchRSSFeed(substackName) {
-  try {
-    const response = await fetch(`https://${substackName}.substack.com/feed`, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; GitHubAction/1.0)'
+async function fetchRSSFeed(substackName, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      // Add small delay between retries
+      if (i > 0) {
+        await new Promise(resolve => setTimeout(resolve, 2000 * i));
       }
-    });
+      
+      const response = await fetch(`https://${substackName}.substack.com/feed`, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'Accept': 'application/rss+xml, application/xml, text/xml',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        },
+        timeout: 10000
+      });
     
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -44,30 +55,35 @@ async function fetchRSSFeed(substackName) {
     
     const itemsArray = Array.isArray(items) ? items : [items];
     
-    return itemsArray.slice(0, 3).map(item => ({
-      title: item.title || 'Untitled Post',
-      link: item.link || `https://${substackName}.substack.com`,
-      date: new Date(item.pubDate).toLocaleDateString('en-US', { 
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      }),
-      description: item.description?.replace(/<[^>]*>/g, '').substring(0, 120).trim() || 'Click to read more...'
-    }));
-  } catch (error) {
-    console.error(`Error fetching ${substackName} posts:`, error);
-    return null;
+      return itemsArray.slice(0, 3).map(item => ({
+        title: item.title || 'Untitled Post',
+        link: item.link || `https://${substackName}.substack.com`,
+        date: new Date(item.pubDate).toLocaleDateString('en-US', { 
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        }),
+        description: item.description?.replace(/<[^>]*>/g, '').substring(0, 120).trim() || 'Click to read more...'
+      }));
+    } catch (error) {
+      if (i === retries - 1) {
+        console.error(`Error fetching ${substackName} posts after ${retries} attempts:`, error);
+        return null;
+      }
+      console.log(`Attempt ${i + 1} failed for ${substackName}, retrying...`);
+    }
   }
+  return null;
 }
 
 async function updateWritingSection() {
   try {
     console.log('Fetching RSS feeds...');
     
-    const [adityaPosts, gentleVelocityPosts] = await Promise.all([
-      fetchRSSFeed(ADITYA_SUBSTACK),
-      fetchRSSFeed(GENTLE_VELOCITY_SUBSTACK)
-    ]);
+    // Fetch feeds sequentially to avoid rate limiting
+    const adityaPosts = await fetchRSSFeed(ADITYA_SUBSTACK);
+    await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+    const gentleVelocityPosts = await fetchRSSFeed(GENTLE_VELOCITY_SUBSTACK);
     
     if (!adityaPosts || !gentleVelocityPosts) {
       console.log('Failed to fetch one or more RSS feeds, skipping update');
