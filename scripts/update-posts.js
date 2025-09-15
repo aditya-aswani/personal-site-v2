@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const ADITYA_SUBSTACK = 'adityaaswani';
 const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity';
 
-async function fetchRSSFeed(substackName, retries = 3) {
+async function fetchSubstackPosts(substackName, retries = 3) {
   const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -27,55 +27,40 @@ async function fetchRSSFeed(substackName, retries = 3) {
         await new Promise(resolve => setTimeout(resolve, 2000 * i));
       }
 
-      const response = await fetch(`https://${substackName}.substack.com/feed`, {
+      const response = await fetch(`https://${substackName}.substack.com/api/v1/archive`, {
         headers: {
           'User-Agent': userAgents[i % userAgents.length],
-          'Accept': 'application/rss+xml, application/xml, text/xml',
+          'Accept': 'application/json',
           'Accept-Language': 'en-US,en;q=0.9',
           'Cache-Control': 'no-cache',
           'Pragma': 'no-cache',
-          'Referer': 'https://google.com/',
+          'Referer': `https://${substackName}.substack.com/`,
           'DNT': '1',
           'Connection': 'keep-alive'
         },
         timeout: 10000
       });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
-    
-    const text = await response.text();
-    if (!text || text.length < 100) {
-      throw new Error('Empty or invalid RSS response');
+
+    const data = await response.json();
+
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      throw new Error('No posts found in API response');
     }
-    
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      parseTagValue: true,
-      parseAttributeValue: false,
-      trimValues: true
-    });
-    
-    const result = parser.parse(text);
-    const items = result.rss?.channel?.item;
-    
-    if (!items) {
-      throw new Error('No RSS items found');
-    }
-    
-    const itemsArray = Array.isArray(items) ? items : [items];
-    
-      return itemsArray.slice(0, 3).map(item => ({
-        title: item.title || 'Untitled Post',
-        link: item.link || `https://${substackName}.substack.com`,
-        date: new Date(item.pubDate).toLocaleDateString('en-US', { 
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric'
-        }),
-        description: item.description?.replace(/<[^>]*>/g, '').substring(0, 120).trim() || 'Click to read more...'
-      }));
+
+    return data.slice(0, 3).map(post => ({
+      title: post.title || 'Untitled Post',
+      link: post.canonical_url || `https://${substackName}.substack.com`,
+      date: new Date(post.post_date).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      }),
+      description: (post.subtitle || 'Click to read more...').substring(0, 120).trim()
+    }));
     } catch (error) {
       if (i === retries - 1) {
         console.error(`Error fetching ${substackName} posts after ${retries} attempts:`, error);
@@ -89,15 +74,15 @@ async function fetchRSSFeed(substackName, retries = 3) {
 
 async function updateWritingSection() {
   try {
-    console.log('Fetching RSS feeds...');
-    
+    console.log('Fetching Substack posts...');
+
     // Fetch feeds sequentially to avoid rate limiting
-    const adityaPosts = await fetchRSSFeed(ADITYA_SUBSTACK);
+    const adityaPosts = await fetchSubstackPosts(ADITYA_SUBSTACK);
     await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
-    const gentleVelocityPosts = await fetchRSSFeed(GENTLE_VELOCITY_SUBSTACK);
+    const gentleVelocityPosts = await fetchSubstackPosts(GENTLE_VELOCITY_SUBSTACK);
     
     if (!adityaPosts || !gentleVelocityPosts) {
-      console.log('Failed to fetch one or more RSS feeds, skipping update');
+      console.log('Failed to fetch one or more Substack feeds, skipping update');
       return;
     }
     
@@ -126,19 +111,19 @@ ${gentleVelocityPosts.map(post => `  {
     // Replace the existing post arrays
     let updatedContent = componentContent.replace(
       /\/\/ Aditya's latest posts from RSS feed\nconst adityaPosts: BlogPost\[\] = \[[\s\S]*?\];/,
-      `// Aditya's latest posts from RSS feed\n${adityaPostsCode}`
+      `// Aditya's latest posts from Substack API\n${adityaPostsCode}`
     );
-    
+
     updatedContent = updatedContent.replace(
       /\/\/ Gentle Velocity latest posts from RSS feed\nconst gentleVelocityPosts: BlogPost\[\] = \[[\s\S]*?\];/,
-      `// Gentle Velocity latest posts from RSS feed\n${gentleVelocityPostsCode}`
+      `// Gentle Velocity latest posts from Substack API\n${gentleVelocityPostsCode}`
     );
-    
+
     // Add update timestamp comment
     const timestamp = new Date().toISOString();
     updatedContent = updatedContent.replace(
       /\/\/ Static post data from Substack feeds \(updated manually\)/,
-      `// Static post data from Substack feeds (auto-updated: ${timestamp})`
+      `// Static post data from Substack API (auto-updated: ${timestamp})`
     );
     
     await fs.writeFile(componentPath, updatedContent, 'utf-8');
