@@ -12,20 +12,31 @@ const ADITYA_SUBSTACK = 'adityaaswani';
 const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity';
 
 async function fetchRSSFeed(substackName, retries = 3) {
+  const userAgents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15'
+  ];
+
   for (let i = 0; i < retries; i++) {
     try {
       // Add small delay between retries
       if (i > 0) {
         await new Promise(resolve => setTimeout(resolve, 2000 * i));
       }
-      
+
       const response = await fetch(`https://${substackName}.substack.com/feed`, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'User-Agent': userAgents[i % userAgents.length],
           'Accept': 'application/rss+xml, application/xml, text/xml',
           'Accept-Language': 'en-US,en;q=0.9',
           'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
+          'Pragma': 'no-cache',
+          'Referer': 'https://google.com/',
+          'DNT': '1',
+          'Connection': 'keep-alive'
         },
         timeout: 10000
       });
