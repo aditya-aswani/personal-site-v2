@@ -1,9 +1,9 @@
 name: Update Blog Posts
 
-on:
-  schedule:
-    - cron: '0 12 * * *' # Run daily at 12:00 UTC (8 AM ET)
-  workflow_dispatch: # Also allow manual triggering
+#on:
+#  schedule:
+#    - cron: '0 12 * * *' # Run daily at 12:00 UTC (8 AM ET)
+#  workflow_dispatch: # Also allow manual triggering
 
 permissions:
   contents: write
