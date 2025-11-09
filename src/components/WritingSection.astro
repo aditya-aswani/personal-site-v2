@@ -7,12 +7,18 @@ interface BlogPost {
   description: string;
 }
 
-// Static post data from Substack feeds (auto-updated: 2025-09-03T13:27:36.500Z)
+// Static post data from RSS feeds (auto-updated: 2025-11-09T18:43:39.765Z)
 const ADITYA_SUBSTACK = 'adityaaswani'; // adityaaswani.substack.com
 const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity'; // gentlevelocity.substack.com
 
-// Aditya's latest posts from Substack API
+// Aditya's latest posts from RSS feed
 const adityaPosts: BlogPost[] = [
+  {
+    title: "Why AI Safety - 3: AI will Misalign",
+    date: "November 1, 2025",
+    link: "https://adityaaswani.substack.com/p/why-ai-safety-3-ai-will-misalign",
+    description: "Losing Control"
+  },
   {
     title: "From the Subway to the Sangha",
     date: "September 16, 2025",
@@ -24,34 +30,28 @@ const adityaPosts: BlogPost[] = [
     date: "September 9, 2025",
     link: "https://adityaaswani.substack.com/p/ode-to-bidet",
     description: "Save your butt, your money, and (maybe) the world"
-  },
-  {
-    title: "Why I Try to Be Vegan",
-    date: "August 31, 2025",
-    link: "https://adityaaswani.substack.com/p/why-i-try-to-be-vegan",
-    description: "And Why You May Want to Try Too"
   }
 ];
 
-// Gentle Velocity latest posts from Substack API
+// Gentle Velocity latest posts from RSS feed
 const gentleVelocityPosts: BlogPost[] = [
   {
-    title: "15 - Update - Beeminder",
-    date: "September 23, 2025",
-    link: "https://gentlevelocity.substack.com/p/15-update-beeminder",
-    description: "Accountability tracking updates"
+    title: "6 - Priorities - Narrowing",
+    date: "November 9, 2025",
+    link: "https://gentlevelocity.substack.com/p/6-priorities-narrowing",
+    description: "Less is More"
   },
   {
-    title: "14 - Update - Biking",
-    date: "September 22, 2025",
-    link: "https://gentlevelocity.substack.com/p/14-update-biking",
-    description: "Cycling progress and insights"
+    title: "41 - Update - Socializing",
+    date: "November 8, 2025",
+    link: "https://gentlevelocity.substack.com/p/41-update-socializing",
+    description: "Gratitude"
   },
   {
-    title: "13 - Update - Plan",
-    date: "September 20, 2025",
-    link: "https://gentlevelocity.substack.com/p/13-update-plan",
-    description: "Strategic planning updates"
+    title: "40 - Update - Late",
+    date: "November 7, 2025",
+    link: "https://gentlevelocity.substack.com/p/40-update-late",
+    description: "Timeliness"
   }
 ];
 
