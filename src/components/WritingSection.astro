@@ -9,7 +9,6 @@ interface BlogPost {
 
 // Static post data (manually updated: April 2026)
 const ADITYA_SUBSTACK = 'adityaaswani'; // adityaaswani.substack.com
-const GENTLE_VELOCITY_SUBSTACK = 'gentlevelocity'; // gentlevelocity.substack.com
 
 // Aditya's latest posts (manually updated: April 2026)
 const adityaPosts: BlogPost[] = [
@@ -32,82 +31,42 @@ const adityaPosts: BlogPost[] = [
     description: "Three months in the Buddhist Special Forces"
   }
 ];
-
-// Gentle Velocity latest posts (manually updated: April 2026)
-const gentleVelocityPosts: BlogPost[] = [
-  {
-    title: "119 - Update - Limits",
-    date: "April 8, 2026",
-    link: "https://gentlevelocity.substack.com/p/119-update-limits",
-    description: "What I Did Well"
-  },
-  {
-    title: "118 - Update - Consistency",
-    date: "April 6, 2026",
-    link: "https://gentlevelocity.substack.com/p/118-update-consistency",
-    description: "What I Did Well"
-  },
-  {
-    title: "117 - Update - Energy",
-    date: "April 4, 2026",
-    link: "https://gentlevelocity.substack.com/p/117-update-energy",
-    description: "What I Did Well"
-  }
-];
-
-// OPTION 2: If you prefer to use Substack's embed widget instead, 
-// comment out the above and use this in the HTML below:
-// <iframe src="https://YOUR-SUBSTACK-URL.substack.com/embed" width="100%" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
 ---
 
 <section id="writing" class="fade-in">
-  <h2 class="section-title">My Blogs</h2>
-  
-  <div class="writing-columns">
-    <!-- Left Column: Personal Posts -->
-    <div class="writing-column">
-      <h3 class="column-title">Love Yourself Unconditionally</h3>
-      <p class="column-subtitle">Long-form essays</p>
-      <div class="writing-list">
-        {adityaPosts.map(post => (
-          <a href={post.link} class="writing-item" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h4>{post.title}</h4>
-              <span class="date">{post.date}</span>
-              {post.description && <p class="description">{post.description}</p>}
-            </div>
-            <span class="arrow">→</span>
-          </a>
-        ))}
-      </div>
-      <div class="view-all">
-        <a href={`https://${ADITYA_SUBSTACK}.substack.com`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-          View All Essays →
-        </a>
-      </div>
-    </div>
+  <h2 class="section-title">My Writing</h2>
 
-    <!-- Right Column: Gentle Velocity Posts -->
-    <div class="writing-column">
-      <h3 class="column-title">Gentle Velocity</h3>
-      <p class="column-subtitle">Short-form updates</p>
-      <div class="writing-list">
-        {gentleVelocityPosts.map(post => (
-          <a href={post.link} class="writing-item" target="_blank" rel="noopener noreferrer">
-            <div>
-              <h4>{post.title}</h4>
-              <span class="date">{post.date}</span>
-              {post.description && <p class="description">{post.description}</p>}
-            </div>
-            <span class="arrow">→</span>
-          </a>
-        ))}
-      </div>
-      <div class="view-all">
-        <a href={`https://${GENTLE_VELOCITY_SUBSTACK}.substack.com`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-          View All Updates →
-        </a>
-      </div>
+  <div class="writing-list">
+    {adityaPosts.map(post => (
+      <a href={post.link} class="writing-item" target="_blank" rel="noopener noreferrer">
+        <div>
+          <h4>{post.title}</h4>
+          <span class="date">{post.date}</span>
+          {post.description && <p class="description">{post.description}</p>}
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="view-all">
+    <a href={`https://${ADITYA_SUBSTACK}.substack.com`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      View All Essays →
+    </a>
+  </div>
+
+  <div class="subscribe-box">
+    <p class="subscribe-title">Get my essays by email</p>
+    <p class="subscribe-desc">No spam. Unsubscribe anytime.</p>
+    <div class="substack-wrapper">
+      <iframe
+        src="https://adityaaswani.substack.com/embed"
+        width="100%"
+        height="150"
+        style="border: none; background: transparent; display: block;"
+        frameborder="0"
+        scrolling="no"
+      ></iframe>
     </div>
   </div>
 </section>
@@ -128,40 +87,14 @@ const gentleVelocityPosts: BlogPost[] = [
     -webkit-text-fill-color: transparent;
   }
 
-  .writing-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
-  }
-
-  .writing-column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .column-title {
-    font-size: 1.25rem;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border);
-  }
-
-  .column-subtitle {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-
   .writing-list {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    flex-grow: 1;
+    margin-top: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .writing-item {
@@ -217,17 +150,37 @@ const gentleVelocityPosts: BlogPost[] = [
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  @media (max-width: 768px) {
-    .writing-columns {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    
-    .column-title {
-      font-size: 1.125rem;
-    }
+  .subscribe-box {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .subscribe-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem;
+  }
+
+  .subscribe-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0 0 1.25rem;
+  }
+
+  .substack-wrapper {
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .btn-secondary {
@@ -249,16 +202,4 @@ const gentleVelocityPosts: BlogPost[] = [
     border-color: var(--accent);
   }
 
-  /* Substack embed styles if using Option 2 */
-  .substack-embed {
-    margin-top: 2rem;
-    border-radius: 15px;
-    overflow: hidden;
-  }
-
-  .substack-embed iframe {
-    background: var(--bg-secondary) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 15px;
-  }
 </style>
