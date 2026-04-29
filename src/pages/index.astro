@@ -51,14 +51,9 @@ import Footer from '../components/Footer.astro';
       const nav = document.querySelector('nav');
       
       if (target && nav) {
-        // Calculate offset for fixed navbar
         const navHeight = nav.offsetHeight;
-        const targetPosition = target.offsetTop - navHeight - 20; // Extra 20px padding
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
       }
     });
   });
