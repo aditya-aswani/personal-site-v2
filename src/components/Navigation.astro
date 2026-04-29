@@ -20,7 +20,7 @@ const navItems = [
       ))}
     </ul>
     <div class="nav-controls">
-      <a href="https://adityaaswani.substack.com" target="_blank" rel="noopener noreferrer" class="nav-subscribe">Subscribe</a>
+      <a href={currentPath === "/" ? "#writing" : "/#writing"} class="nav-subscribe">Subscribe</a>
       <button class="theme-toggle" aria-label="Toggle theme">
         <span class="theme-icon dark">🌙</span>
         <span class="theme-icon light">☀️</span>
