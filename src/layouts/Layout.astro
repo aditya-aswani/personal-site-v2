@@ -2,9 +2,11 @@
 export interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = "Aditya Aswani - Personal hub for projects and writings." } = Astro.props;
+const { title, description = "Aditya Aswani - Personal hub for projects and writings.", ogImage } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, "https://adityaaswani.com").href;
 ---
 
 <!DOCTYPE html>
@@ -21,12 +23,15 @@ const { title, description = "Aditya Aswani - Personal hub for projects and writ
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://adityaaswani.com" />
+    <meta property="og:url" content={canonicalUrl} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, "https://adityaaswani.com").href} />}
+    {ogImage && <meta name="twitter:card" content="summary_large_image" />}
+    {ogImage && <meta name="twitter:image" content={new URL(ogImage, "https://adityaaswani.com").href} />}
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
