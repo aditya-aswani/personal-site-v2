@@ -195,6 +195,11 @@ const navItems = [
   }
 
   @media (max-width: 768px) {
+    .nav-links a::after,
+    .nav-links a.active::after {
+      display: none;
+    }
+
     .nav-links {
       position: absolute;
       top: 100%;
