@@ -23,6 +23,9 @@ const canonicalUrl = new URL(Astro.url.pathname, "https://adityaaswani.com").hre
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />

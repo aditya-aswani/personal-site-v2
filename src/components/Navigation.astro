@@ -259,7 +259,7 @@ const navItems = [
     const nav = document.querySelector('nav');
     if (!nav) return;
     
-    const currentScroll = window.pageYOffset;
+    const currentScroll = window.scrollY;
     const theme = document.documentElement.getAttribute('data-theme');
     const isDark = theme === 'dark' || !theme;
     
