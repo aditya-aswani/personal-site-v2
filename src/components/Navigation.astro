@@ -20,6 +20,7 @@ const navItems = [
       ))}
     </ul>
     <div class="nav-controls">
+      <a href="https://adityaaswani.substack.com" target="_blank" rel="noopener noreferrer" class="nav-subscribe">Subscribe</a>
       <button class="theme-toggle" aria-label="Toggle theme">
         <span class="theme-icon dark">🌙</span>
         <span class="theme-icon light">☀️</span>
@@ -108,6 +109,31 @@ const navItems = [
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  .nav-subscribe {
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    white-space: nowrap;
+  }
+
+  .nav-subscribe:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .nav-subscribe {
+      display: none;
+    }
   }
 
   .theme-toggle {
