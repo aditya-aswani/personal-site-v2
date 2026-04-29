@@ -241,15 +241,9 @@ const navItems = [
 </style>
 
 <script>
-  // Theme management
-  const getStoredTheme = () => localStorage.getItem('theme');
-  const getPreferredTheme = () => {
-    const storedTheme = getStoredTheme();
-    if (storedTheme) return storedTheme;
-    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  };
-
-  const setTheme = (theme) => {
+  // Theme attribute is set synchronously by the inline script in Layout.astro <head>.
+  // Only persist on explicit toggle so the site keeps following system theme until then.
+  const persistTheme = (theme: string) => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   };
@@ -258,11 +252,11 @@ const navItems = [
   const updateNavBackground = () => {
     const nav = document.querySelector('nav');
     if (!nav) return;
-    
+
     const currentScroll = window.scrollY;
     const theme = document.documentElement.getAttribute('data-theme');
     const isDark = theme === 'dark' || !theme;
-    
+
     if (currentScroll > 100) {
       nav.style.background = isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)';
       nav.style.boxShadow = isDark ? '0 5px 20px rgba(0, 0, 0, 0.3)' : '0 5px 20px rgba(0, 0, 0, 0.1)';
@@ -272,12 +266,7 @@ const navItems = [
     }
   };
 
-  // Initialize theme on page load
   document.addEventListener('DOMContentLoaded', () => {
-    const theme = getPreferredTheme();
-    setTheme(theme);
-    
-    // Update nav background after theme is set
     setTimeout(updateNavBackground, 0);
 
     // Theme toggle functionality
@@ -286,8 +275,7 @@ const navItems = [
       themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-        // Update nav background immediately after theme change
+        persistTheme(newTheme);
         setTimeout(updateNavBackground, 0);
       });
     }

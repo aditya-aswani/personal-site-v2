@@ -4,7 +4,7 @@ interface BlogPost {
   title: string;
   link: string;
   date: string;
-  description: string;
+  description?: string;
 }
 
 // Static post data (manually updated: April 2026)
@@ -61,11 +61,10 @@ const adityaPosts: BlogPost[] = [
     <div class="substack-wrapper">
       <iframe
         src="https://adityaaswani.substack.com/embed"
+        title="Subscribe to Aditya Aswani's Substack"
         width="100%"
         height="150"
-        style="border: none; background: transparent; display: block;"
-        frameborder="0"
-        scrolling="no"
+        style="border: none; background: transparent; display: block; overflow: hidden;"
       ></iframe>
     </div>
   </div>

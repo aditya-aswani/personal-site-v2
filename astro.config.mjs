@@ -8,9 +8,4 @@ export default defineConfig({
   integrations: [
     sitemap(),
   ],
-  vite: {
-    ssr: {
-      external: ["svgo"]
-    }
-  }
 });

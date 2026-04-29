@@ -3,9 +3,10 @@ export interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Aditya Aswani - Personal hub for projects and writings.", ogImage } = Astro.props;
+const { title, description = "Aditya Aswani - Personal hub for projects and writings.", ogImage, noindex = false } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, "https://adityaaswani.com").href;
 ---
 
@@ -15,6 +16,8 @@ const canonicalUrl = new URL(Astro.url.pathname, "https://adityaaswani.com").hre
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
