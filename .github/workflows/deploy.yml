@@ -1,16 +1,9 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger on pushes to main branch
   push:
     branches: [ main ]
-  
-  # Trigger on manual runs
   workflow_dispatch:
-  
-  # Schedule automatic rebuilds (daily at 2 AM UTC to fetch new Substack posts)
-  schedule:
-    - cron: '0 2 * * *'
 
 # Sets permissions for GitHub Pages
 permissions:

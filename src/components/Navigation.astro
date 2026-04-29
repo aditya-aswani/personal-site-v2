@@ -2,10 +2,10 @@
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { href: currentPath === "/" ? "#home" : "/", label: "Home" },
-  { href: currentPath === "/" ? "#work" : "/#work", label: "Work" },
-  { href: currentPath === "/" ? "#writing" : "/#writing", label: "Writing" },
-  { href: "/contact", label: "Contact" }
+  { href: currentPath === "/" ? "#home" : "/", label: "Home", active: currentPath === "/" },
+  { href: currentPath === "/" ? "#work" : "/#work", label: "Work", active: false },
+  { href: currentPath === "/" ? "#writing" : "/#writing", label: "Writing", active: false },
+  { href: "/contact", label: "Contact", active: currentPath === "/contact" },
 ];
 ---
 
@@ -16,7 +16,7 @@ const navItems = [
     </div>
     <ul class="nav-links">
       {navItems.map(item => (
-        <li><a href={item.href}>{item.label}</a></li>
+        <li><a href={item.href} class:list={[{ active: item.active }]}>{item.label}</a></li>
       ))}
     </ul>
     <div class="nav-controls">
@@ -83,7 +83,8 @@ const navItems = [
     font-weight: 500;
   }
 
-  .nav-links a:hover {
+  .nav-links a:hover,
+  .nav-links a.active {
     color: var(--accent-hover);
   }
 
@@ -98,7 +99,8 @@ const navItems = [
     transition: width 0.3s ease;
   }
 
-  .nav-links a:hover::after {
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
     width: 100%;
   }
 
