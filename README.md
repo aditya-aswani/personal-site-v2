@@ -1,9 +1,24 @@
-# Personal Website v2
+# adityaaswani.com
 
-A modern personal website built with Next.js, featuring a clean design and responsive layout. Includes pages for about, projects, blog posts, and contact information. Optimized for performance and SEO with dark/light theme support.
+Personal website for Aditya Aswani — Buddhist, writer, and animal rights activist.
 
 ## Tech Stack
-- Next.js 14
+- [Astro](https://astro.build/) (static site generator)
 - TypeScript
-- Tailwind CSS
-- MDX for content
+- Custom CSS (no framework)
+- Deployed via GitHub Pages with a custom domain
+
+## Pages
+- `/` — Homepage with bio, work, writing, and newsletter subscribe
+- `/links` — Link-in-bio page (used as social bio link)
+- `/contact` — Contact and feedback page
+- `/learn-meditation` — One-on-one meditation guidance info
+
+## Development
+```bash
+npm install
+npm run dev
+```
+
+## Deployment
+Automatically deployed to GitHub Pages on push to `main`.
