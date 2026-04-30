@@ -26,7 +26,8 @@ import Layout from '../layouts/Layout.astro';
     <section class="link-section" style="--delay: 0.1s">
       <h2 class="section-label">Follow the case</h2>
 
-      <a class="link-card" href="https://savethedogs.io" target="_blank" rel="noopener noreferrer">
+      <a class="link-card link-card--featured" href="https://savethedogs.io" target="_blank" rel="noopener noreferrer">
+        <span class="featured-badge">Take action</span>
         <p class="link-title">Sign the petition — help us get to 100k!</p>
         <p class="link-desc">Help free the dogs at Ridglan Farms</p>
       </a>
@@ -378,6 +379,81 @@ import Layout from '../layouts/Layout.astro';
     .link-card:hover {
       border-color: rgba(255, 255, 255, 0.25);
     }
+  }
+
+  .link-card--featured {
+    background: linear-gradient(135deg, #fff8ed 0%, #fef3c7 100%);
+    border-color: #d97706;
+    border-width: 1px;
+    padding-top: 0.875rem;
+    position: relative;
+  }
+
+  .link-card--featured:hover {
+    border-color: #b45309;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(217, 119, 6, 0.15);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .link-card--featured {
+      background: linear-gradient(135deg, #292015 0%, #2d1f08 100%);
+      border-color: #d97706;
+    }
+
+    .link-card--featured:hover {
+      border-color: #f59e0b;
+      box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+    }
+  }
+
+  .featured-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #92400e;
+    background: rgba(217, 119, 6, 0.12);
+    border: 0.5px solid rgba(217, 119, 6, 0.35);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .featured-badge {
+      color: #fbbf24;
+      background: rgba(217, 119, 6, 0.2);
+      border-color: rgba(217, 119, 6, 0.5);
+    }
+  }
+
+  :global([data-theme="dark"]) .link-card--featured {
+    background: linear-gradient(135deg, #292015 0%, #2d1f08 100%);
+    border-color: #d97706;
+  }
+
+  :global([data-theme="dark"]) .link-card--featured:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 4px 16px rgba(217, 119, 6, 0.25);
+  }
+
+  :global([data-theme="dark"]) .featured-badge {
+    color: #fbbf24;
+    background: rgba(217, 119, 6, 0.2);
+    border-color: rgba(217, 119, 6, 0.5);
+  }
+
+  :global([data-theme="light"]) .link-card--featured {
+    background: linear-gradient(135deg, #fff8ed 0%, #fef3c7 100%);
+    border-color: #d97706;
+  }
+
+  :global([data-theme="light"]) .featured-badge {
+    color: #92400e;
+    background: rgba(217, 119, 6, 0.12);
+    border-color: rgba(217, 119, 6, 0.35);
   }
 
   .link-title {
