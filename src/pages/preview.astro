@@ -1,0 +1,968 @@
+---
+import { projects, posts, heroLinks } from "../data/previewContent";
+
+const today = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview — Aditya Aswani</title>
+    <meta name="description" content="A redesign preview." />
+    <meta name="robots" content="noindex" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Serif+4:opsz,wght@8..60,300..700&display=swap"
+    />
+
+    <style is:global>
+      :root {
+        --paper: #f1ead9;
+        --paper-warm: #e9e0c8;
+        --ink: #1b1612;
+        --ink-soft: #4a4138;
+        --ink-faint: #897e6f;
+        --hair: #c2b699;
+        --pine: #2c4a36;
+        --rust: #8a3a1f;
+        --serif: "Fraunces", ui-serif, Georgia, serif;
+        --body: "Source Serif 4", ui-serif, Georgia, serif;
+        --measure: 36rem;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      ::selection {
+        background: var(--pine);
+        color: var(--paper);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 18px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: "liga", "kern", "onum", "ss01";
+        background-image:
+          radial-gradient(
+            circle at 18% 12%,
+            rgba(202, 188, 152, 0.18) 0%,
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 82% 88%,
+            rgba(180, 160, 120, 0.12) 0%,
+            transparent 40%
+          );
+        background-attachment: fixed;
+      }
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem 4rem;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* ---------- masthead ---------- */
+      .masthead {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 0 0.75rem;
+        border-bottom: 1px solid var(--hair);
+        font-family: var(--serif);
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        font-variant-numeric: tabular-nums lining-nums;
+      }
+
+      .masthead-mark {
+        font-weight: 600;
+        letter-spacing: 0.45em;
+      }
+
+      .masthead-meta {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .masthead-meta span:not(:last-child)::after {
+        content: " · ";
+        color: var(--ink-faint);
+        margin-left: 1rem;
+        letter-spacing: 0;
+      }
+
+      /* ---------- nav ---------- */
+      .nav {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 1.1rem 0 1.25rem;
+        border-bottom: 1px solid var(--hair);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.95rem;
+        font-variation-settings: "opsz" 24;
+      }
+
+      .nav a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 0.12rem;
+        transition:
+          border-color 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .nav a:hover {
+        border-bottom-color: var(--ink);
+      }
+
+      .nav-sep {
+        color: var(--ink-faint);
+        font-style: normal;
+        font-size: 0.7rem;
+        opacity: 0.7;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        padding: 6rem 0 5rem;
+      }
+
+      .kicker {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 14;
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        font-variant-numeric: oldstyle-nums;
+      }
+
+      .wordmark {
+        font-family: var(--serif);
+        font-weight: 360;
+        font-variation-settings: "opsz" 144;
+        font-size: clamp(4rem, 13vw, 11.5rem);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        margin-top: 0.4rem;
+      }
+
+      .wordmark-line {
+        display: block;
+      }
+
+      .wordmark-italic {
+        font-style: italic;
+        font-variation-settings: "opsz" 144;
+        font-weight: 320;
+        color: var(--pine);
+        padding-left: 1em;
+      }
+
+      .dek {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 36;
+        font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+        color: var(--ink-soft);
+        margin-top: 1.75rem;
+        max-width: var(--measure);
+        line-height: 1.45;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 3rem;
+        align-items: end;
+        margin-top: 3.5rem;
+      }
+
+      .lede {
+        max-width: var(--measure);
+        font-family: var(--body);
+        font-size: 1.125rem;
+        line-height: 1.7;
+        color: var(--ink);
+      }
+
+      .lede p {
+        margin-bottom: 1.25rem;
+      }
+
+      .lede p:last-child {
+        margin-bottom: 0;
+      }
+
+      .dropcap {
+        font-family: var(--serif);
+        font-variation-settings: "opsz" 144;
+        font-weight: 500;
+        font-size: 4.4em;
+        line-height: 0.85;
+        float: left;
+        margin: 0.05em 0.12em -0.1em 0;
+        color: var(--pine);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2.25rem;
+        flex-wrap: wrap;
+        align-items: baseline;
+      }
+
+      .action {
+        font-family: var(--serif);
+        font-size: 1.02rem;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 0.18rem;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.45rem;
+        transition:
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .action-primary {
+        font-style: italic;
+        font-weight: 500;
+        font-variation-settings: "opsz" 24;
+      }
+
+      .action:hover {
+        color: var(--pine);
+        border-bottom-color: var(--pine);
+      }
+
+      .action .arrow {
+        display: inline-block;
+        transition: transform 0.25s ease;
+      }
+
+      .action:hover .arrow {
+        transform: translateX(0.25rem);
+      }
+
+      /* ---------- hero figure ---------- */
+      .hero-figure {
+        max-width: 240px;
+        margin: 0;
+      }
+
+      .hero-figure-frame {
+        position: relative;
+        padding: 0.5rem;
+        background: var(--paper);
+        border: 1px solid var(--hair);
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.04),
+          0 22px 44px -28px rgba(40, 30, 20, 0.35);
+      }
+
+      .hero-figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: grayscale(0.18) contrast(1.04) sepia(0.06);
+      }
+
+      .hero-figure figcaption {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 14;
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        margin-top: 0.6rem;
+        text-align: right;
+      }
+
+      /* ---------- rule ---------- */
+      .rule {
+        border: none;
+        border-top: 1px solid var(--hair);
+        margin: 5.5rem 0;
+        position: relative;
+      }
+
+      .rule::after {
+        content: "❦";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--paper);
+        padding: 0 1.25rem;
+        color: var(--ink-faint);
+        font-family: var(--serif);
+        font-size: 1rem;
+      }
+
+      /* ---------- sections ---------- */
+      .section {
+        scroll-margin-top: 2rem;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        gap: 1.25rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.1rem;
+        border-bottom: 1px solid var(--hair);
+      }
+
+      .section-mark {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 24;
+        font-size: 1rem;
+        color: var(--ink-faint);
+        font-variant-numeric: oldstyle-nums;
+      }
+
+      .section-head h2 {
+        font-family: var(--serif);
+        font-weight: 380;
+        font-variation-settings: "opsz" 144;
+        font-size: clamp(2rem, 5vw, 2.75rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      /* ---------- entries (work) ---------- */
+      .entries,
+      .posts {
+        list-style: none;
+      }
+
+      .entry-link,
+      .post-link {
+        display: grid;
+        gap: 1.25rem;
+        padding: 1.5rem 0.5rem 1.5rem 0;
+        border-top: 1px solid var(--hair);
+        text-decoration: none;
+        color: var(--ink);
+        align-items: baseline;
+        transition:
+          padding-left 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+          background 0.3s ease;
+      }
+
+      .entry:last-child .entry-link,
+      .post:last-child .post-link {
+        border-bottom: 1px solid var(--hair);
+      }
+
+      .entry-link:hover,
+      .post-link:hover {
+        padding-left: 1rem;
+      }
+
+      .entry-link {
+        grid-template-columns: 4rem 1fr auto;
+      }
+
+      .entry-number {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 36;
+        font-size: 1.2rem;
+        color: var(--ink-faint);
+        font-variant-numeric: oldstyle-nums;
+        line-height: 1;
+      }
+
+      .entry-body {
+        display: block;
+        max-width: 38rem;
+      }
+
+      .entry-title {
+        display: block;
+        font-family: var(--serif);
+        font-variation-settings: "opsz" 36;
+        font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+        font-weight: 400;
+        letter-spacing: -0.012em;
+        line-height: 1.15;
+        transition: color 0.25s ease;
+      }
+
+      .entry-link:hover .entry-title,
+      .post-link:hover .post-title,
+      .all-essays:hover {
+        color: var(--pine);
+      }
+
+      .entry-description {
+        display: block;
+        font-family: var(--body);
+        font-size: 1rem;
+        color: var(--ink-soft);
+        margin-top: 0.55rem;
+        line-height: 1.6;
+      }
+
+      .entry-arrow,
+      .post-arrow {
+        font-family: var(--serif);
+        color: var(--ink-faint);
+        font-size: 1.2rem;
+        transition:
+          transform 0.25s ease,
+          color 0.25s ease;
+        align-self: center;
+      }
+
+      .entry-link:hover .entry-arrow,
+      .post-link:hover .post-arrow {
+        transform: translateX(0.4rem);
+        color: var(--pine);
+      }
+
+      /* ---------- posts (writing) ---------- */
+      .post-link {
+        grid-template-columns: 7rem 1fr auto;
+      }
+
+      .post-date {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 14;
+        font-size: 0.88rem;
+        color: var(--ink-faint);
+        font-variant-numeric: oldstyle-nums;
+        letter-spacing: 0.01em;
+      }
+
+      .post-title {
+        display: block;
+        font-family: var(--serif);
+        font-variation-settings: "opsz" 36;
+        font-size: clamp(1.15rem, 2vw, 1.35rem);
+        font-weight: 420;
+        line-height: 1.25;
+        transition: color 0.25s ease;
+      }
+
+      .post-description {
+        display: block;
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 14;
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        margin-top: 0.4rem;
+      }
+
+      .all-essays {
+        display: inline-block;
+        margin-top: 2.25rem;
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 24;
+        font-size: 1.02rem;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 0.18rem;
+        transition:
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .all-essays:hover {
+        border-bottom-color: var(--pine);
+      }
+
+      .all-essays .arrow {
+        display: inline-block;
+        transition: transform 0.25s ease;
+      }
+
+      .all-essays:hover .arrow {
+        transform: translateX(0.25rem);
+      }
+
+      /* ---------- subscribe ---------- */
+      .section-narrow {
+        max-width: 640px;
+      }
+
+      .subscribe-blurb {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 24;
+        font-size: 1.15rem;
+        color: var(--ink-soft);
+        margin-bottom: 1.75rem;
+        max-width: var(--measure);
+        line-height: 1.55;
+      }
+
+      .substack-frame {
+        background: var(--paper-warm);
+        border: 1px solid var(--hair);
+        padding: 1rem;
+      }
+
+      .substack-frame iframe {
+        background: transparent;
+      }
+
+      /* ---------- colophon ---------- */
+      .colophon {
+        margin-top: 5.5rem;
+        font-family: var(--serif);
+      }
+
+      .colophon-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--hair);
+      }
+
+      .colophon-label {
+        font-style: italic;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .colophon-links {
+        display: flex;
+        gap: 1.4rem;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+      }
+
+      .colophon-links a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--hair);
+        padding-bottom: 0.1rem;
+        transition: border-color 0.2s ease;
+      }
+
+      .colophon-links a:hover {
+        border-bottom-color: var(--ink);
+      }
+
+      .colophon-blessing {
+        font-family: var(--serif);
+        font-style: italic;
+        font-variation-settings: "opsz" 36;
+        font-size: 1.15rem;
+        color: var(--ink-soft);
+        margin-bottom: 0.85rem;
+        line-height: 1.5;
+      }
+
+      .colophon-note {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        letter-spacing: 0.06em;
+      }
+
+      .colophon-note em {
+        font-style: italic;
+        color: var(--ink-soft);
+      }
+
+      .colophon-note .dot {
+        display: inline-block;
+        margin: 0 0.5rem;
+        opacity: 0.5;
+      }
+
+      /* ---------- entrance animation ---------- */
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .masthead,
+      .nav,
+      .kicker,
+      .wordmark,
+      .dek,
+      .hero-grid,
+      .hero-actions {
+        animation: reveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      }
+
+      .nav {
+        animation-delay: 0.1s;
+      }
+      .kicker {
+        animation-delay: 0.25s;
+      }
+      .wordmark {
+        animation-delay: 0.4s;
+        animation-duration: 1s;
+      }
+      .dek {
+        animation-delay: 0.7s;
+      }
+      .hero-grid {
+        animation-delay: 0.95s;
+      }
+      .hero-actions {
+        animation-delay: 1.15s;
+      }
+
+      /* ---------- mobile ---------- */
+      @media (max-width: 760px) {
+        main {
+          padding: 1rem 1.25rem 3rem;
+        }
+
+        .masthead {
+          font-size: 0.66rem;
+        }
+
+        .masthead-meta {
+          gap: 1rem;
+        }
+
+        .masthead-meta .meta-vol {
+          display: none;
+        }
+
+        .nav {
+          flex-wrap: wrap;
+          font-size: 0.88rem;
+          padding: 0.9rem 0;
+        }
+
+        .hero {
+          padding: 3rem 0 2.5rem;
+        }
+
+        .wordmark {
+          font-size: clamp(3.25rem, 16vw, 5.5rem);
+        }
+
+        .wordmark-italic {
+          padding-left: 0.6em;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+          margin-top: 2.5rem;
+        }
+
+        .hero-figure {
+          max-width: 200px;
+          justify-self: end;
+        }
+
+        .rule {
+          margin: 4rem 0;
+        }
+
+        .entry-link {
+          grid-template-columns: 2.4rem 1fr;
+        }
+
+        .entry-arrow {
+          display: none;
+        }
+
+        .post-link {
+          grid-template-columns: 1fr;
+          gap: 0.45rem;
+        }
+
+        .post-date {
+          margin-bottom: -0.3rem;
+        }
+
+        .post-arrow {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-delay: 0s !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="masthead">
+        <span class="masthead-mark">A · A</span>
+        <div class="masthead-meta">
+          <span class="meta-vol">No. 04 — Vol. I</span>
+          <span>{today}</span>
+        </div>
+      </header>
+
+      <nav class="nav">
+        <a href="#work">Work</a>
+        <span class="nav-sep">●</span>
+        <a href="#writing">Writing</a>
+        <span class="nav-sep">●</span>
+        <a href="/contact">Contact</a>
+        <span class="nav-sep">●</span>
+        <a href="#subscribe">Subscribe</a>
+      </nav>
+
+      <section class="hero">
+        <p class="kicker">A personal record · est. 2024</p>
+        <h1 class="wordmark">
+          <span class="wordmark-line">Aditya</span>
+          <span class="wordmark-line wordmark-italic">Aswani.</span>
+        </h1>
+        <p class="dek">
+          Writer, Buddhist meditator, and animal-rights defendant — currently
+          facing a felony charge for rescuing dogs from a research lab in
+          Wisconsin.
+        </p>
+
+        <div class="hero-grid">
+          <div class="lede">
+            <p>
+              <span class="dropcap">T</span>his site is where I keep my work in
+              one place: the case I&rsquo;m defending in court, the meditation
+              communities I help run, and the essays I publish on Substack
+              about the slow collisions between practice and the world.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="action action-primary"
+                href={heroLinks.essay}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read the latest essay <span class="arrow">→</span>
+              </a>
+              <a
+                class="action"
+                href={heroLinks.petition}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sign the petition <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <figure class="hero-figure">
+            <div class="hero-figure-frame">
+              <img src="/aditya-photo.jpg" alt="Aditya Aswani" />
+            </div>
+            <figcaption>Brooklyn, 2025.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <section class="section" id="work">
+        <header class="section-head">
+          <span class="section-mark">§ I.</span>
+          <h2>What I&rsquo;m working on</h2>
+        </header>
+
+        <ol class="entries">
+          {
+            projects.map((project) => (
+              <li class="entry">
+                <a
+                  class="entry-link"
+                  href={project.link}
+                  target={project.link.startsWith("http") ? "_blank" : null}
+                  rel={
+                    project.link.startsWith("http")
+                      ? "noopener noreferrer"
+                      : null
+                  }
+                >
+                  <span class="entry-number">{project.number}</span>
+                  <span class="entry-body">
+                    <span class="entry-title">{project.title}</span>
+                    <span class="entry-description">{project.description}</span>
+                  </span>
+                  <span class="entry-arrow">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <hr class="rule" />
+
+      <section class="section" id="writing">
+        <header class="section-head">
+          <span class="section-mark">§ II.</span>
+          <h2>Recent writing</h2>
+        </header>
+
+        <ol class="posts">
+          {
+            posts.map((post) => (
+              <li class="post">
+                <a
+                  class="post-link"
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="post-date">{post.date}</span>
+                  <span>
+                    <span class="post-title">{post.title}</span>
+                    <span class="post-description">{post.description}</span>
+                  </span>
+                  <span class="post-arrow">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+
+        <a
+          class="all-essays"
+          href="https://adityaaswani.substack.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Browse all essays <span class="arrow">→</span>
+        </a>
+      </section>
+
+      <hr class="rule" />
+
+      <section class="section section-narrow" id="subscribe">
+        <header class="section-head">
+          <span class="section-mark">§ III.</span>
+          <h2>Stay in touch</h2>
+        </header>
+
+        <p class="subscribe-blurb">
+          A short note arrives in your inbox whenever I publish. No spam — and
+          you can leave any time.
+        </p>
+
+        <div class="substack-frame">
+          <iframe
+            src={heroLinks.substackEmbed}
+            title="Subscribe to Aditya Aswani's Substack"
+            width="100%"
+            height="150"
+            style="border: none; background: transparent; display: block; overflow: hidden;"></iframe>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <footer class="colophon">
+        <div class="colophon-row">
+          <span class="colophon-label">Elsewhere</span>
+          <div class="colophon-links">
+            <a href="/previews" class="back-link"
+              >← all previews</a
+            >
+            <a
+              href="https://substack.com/@adinotices"
+              target="_blank"
+              rel="noopener noreferrer">Substack</a
+            >
+            <a
+              href="https://www.instagram.com/adinotices"
+              target="_blank"
+              rel="noopener noreferrer">Instagram</a
+            >
+            <a
+              href="https://x.com/adinotices"
+              target="_blank"
+              rel="noopener noreferrer">X</a
+            >
+            <a
+              href="https://bsky.app/profile/adinotices.com"
+              target="_blank"
+              rel="noopener noreferrer">Bluesky</a
+            >
+            <a
+              href="https://www.threads.net/@adinotices"
+              target="_blank"
+              rel="noopener noreferrer">Threads</a
+            >
+            <a href="/links">All links →</a>
+          </div>
+        </div>
+
+        <p class="colophon-blessing">
+          May all beings be happy, healthy, and safe.
+        </p>
+        <p class="colophon-note">
+          Set in <em>Fraunces</em> &amp; <em>Source Serif&nbsp;4</em
+          ><span class="dot">·</span>Built with <em>Astro</em> &amp;
+          <em>Claude Code</em><span class="dot">·</span>&copy; 2026
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
