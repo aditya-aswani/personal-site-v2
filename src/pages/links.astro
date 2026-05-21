@@ -26,6 +26,12 @@ import Layout from '../layouts/Layout.astro';
     <section class="link-section" style="--delay: 0.1s">
       <h2 class="section-label">Follow the case</h2>
 
+      <a class="link-card link-card--live" href="https://iframe.dacast.com/live/4dafbf46-ed15-c11c-fa22-a58262833632/e0a92852-93f6-8586-b999-0d1090eeaebf" target="_blank" rel="noopener noreferrer">
+        <span class="live-badge"><span class="live-dot"></span>Watch Live</span>
+        <p class="link-title">Join the arraignment livestream today</p>
+        <p class="link-desc">Thursday, May 21st, 2 PM Central Time</p>
+      </a>
+
       <a class="link-card link-card--featured" href="https://savethedogs.io" target="_blank" rel="noopener noreferrer">
         <span class="featured-badge">Take action</span>
         <p class="link-title">Sign the petition — help us get to 100k!</p>
@@ -454,6 +460,98 @@ import Layout from '../layouts/Layout.astro';
     color: #92400e;
     background: rgba(217, 119, 6, 0.12);
     border-color: rgba(217, 119, 6, 0.35);
+  }
+
+  /* Live stream card */
+  .link-card--live {
+    background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+    border-color: #dc2626;
+    border-width: 1.5px;
+    padding-top: 0.875rem;
+    position: relative;
+  }
+
+  .link-card--live:hover {
+    border-color: #b91c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .link-card--live {
+      background: linear-gradient(135deg, #2d1515 0%, #3b0f0f 100%);
+      border-color: #dc2626;
+    }
+
+    .link-card--live:hover {
+      border-color: #ef4444;
+      box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+    }
+  }
+
+  :global([data-theme="dark"]) .link-card--live {
+    background: linear-gradient(135deg, #2d1515 0%, #3b0f0f 100%);
+    border-color: #dc2626;
+  }
+
+  :global([data-theme="dark"]) .link-card--live:hover {
+    border-color: #ef4444;
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+  }
+
+  :global([data-theme="light"]) .link-card--live {
+    background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+    border-color: #dc2626;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #991b1b;
+    background: rgba(220, 38, 38, 0.1);
+    border: 0.5px solid rgba(220, 38, 38, 0.4);
+    border-radius: 100px;
+    padding: 3px 9px 3px 7px;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .live-badge {
+      color: #fca5a5;
+      background: rgba(220, 38, 38, 0.2);
+      border-color: rgba(220, 38, 38, 0.5);
+    }
+  }
+
+  :global([data-theme="dark"]) .live-badge {
+    color: #fca5a5;
+    background: rgba(220, 38, 38, 0.2);
+    border-color: rgba(220, 38, 38, 0.5);
+  }
+
+  :global([data-theme="light"]) .live-badge {
+    color: #991b1b;
+    background: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.4);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #dc2626;
+    flex-shrink: 0;
+    animation: live-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
   }
 
   .link-title {
