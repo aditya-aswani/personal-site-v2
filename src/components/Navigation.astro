@@ -4,7 +4,6 @@ const currentPath = Astro.url.pathname;
 const navItems = [
   { href: currentPath === "/" ? "#home" : "/", label: "Home", active: currentPath === "/" },
   { href: currentPath === "/" ? "#work" : "/#work", label: "Work", active: false },
-  { href: currentPath === "/" ? "#writing" : "/#writing", label: "Writing", active: false },
   { href: "/contact", label: "Contact", active: currentPath === "/contact" },
 ];
 ---

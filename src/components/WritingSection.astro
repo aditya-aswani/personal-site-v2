@@ -1,60 +1,7 @@
 ---
-// TypeScript interfaces
-interface BlogPost {
-  title: string;
-  link: string;
-  date: string;
-  description?: string;
-}
-
-// Static post data (manually updated: April 2026)
-const ADITYA_SUBSTACK = 'adityaaswani'; // adityaaswani.substack.com
-
-// Aditya's latest posts (manually updated: April 2026)
-const adityaPosts: BlogPost[] = [
-  {
-    title: "A Dog was Taken from My Arms",
-    date: "March 29, 2026",
-    link: "https://adityaaswani.substack.com/p/a-dog-was-taken-from-my-arms",
-    description: "Now I Face a Felony Charge"
-  },
-  {
-    title: "Why AI Safety - 3: AI will Misalign",
-    date: "November 1, 2025",
-    link: "https://adityaaswani.substack.com/p/why-ai-safety-3-ai-will-misalign",
-    description: "Losing Control"
-  },
-  {
-    title: "From the Subway to the Sangha",
-    date: "September 17, 2025",
-    link: "https://adityaaswani.substack.com/p/from-the-subway-to-the-sangha",
-    description: "Three months in the Buddhist Special Forces"
-  }
-];
 ---
 
 <section id="writing" class="fade-in">
-  <h2 class="section-title">My Writing</h2>
-
-  <div class="writing-list">
-    {adityaPosts.map(post => (
-      <a href={post.link} class="writing-item" target="_blank" rel="noopener noreferrer">
-        <div>
-          <h4>{post.title}</h4>
-          <span class="date">{post.date}</span>
-          {post.description && <p class="description">{post.description}</p>}
-        </div>
-        <span class="arrow">→</span>
-      </a>
-    ))}
-  </div>
-
-  <div class="view-all">
-    <a href={`https://${ADITYA_SUBSTACK}.substack.com`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-      View All Essays →
-    </a>
-  </div>
-
   <div class="subscribe-box" id="subscribe">
     <p class="subscribe-title">Get my essays by email</p>
     <p class="subscribe-desc">No spam. Unsubscribe anytime.</p>
@@ -75,89 +22,6 @@ const adityaPosts: BlogPost[] = [
     padding: 5rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
-  }
-
-  .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .writing-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .writing-item {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    min-width: 0;
-  }
-
-  .writing-item > div {
-    min-width: 0;
-    flex: 1;
-  }
-
-  .writing-item:hover {
-    border-color: var(--accent);
-    transform: translateX(10px);
-  }
-
-  .writing-item h4 {
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  .date {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-  }
-
-  .description {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-    line-height: 1.5;
-  }
-
-  .arrow {
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-    margin-left: 1rem;
-  }
-
-  .writing-item:hover .arrow {
-    transform: translateX(5px);
-  }
-
-  .view-all {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .subscribe-box {
@@ -188,23 +52,5 @@ const adityaPosts: BlogPost[] = [
     overflow: hidden;
   }
 
-  .btn-secondary {
-    padding: 0.875rem 2rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 2px solid var(--border);
-    color: var(--text-primary);
-    background: transparent;
-  }
-
-  .btn-secondary:hover {
-    background: var(--bg-secondary);
-    border-color: var(--accent);
-  }
 
 </style>
