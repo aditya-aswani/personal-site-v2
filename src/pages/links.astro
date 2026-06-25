@@ -24,12 +24,17 @@ import Layout from '../layouts/Layout.astro';
     </header>
 
     <section class="link-section" style="--delay: 0.1s">
-      <h2 class="section-label">Follow the case</h2>
+      <a class="link-card link-card--featured" href="https://forms.gle/r6jD7nzGxyxixAsJA" target="_blank" rel="noopener noreferrer">
+        <span class="featured-badge">Apply by July 6</span>
+        <p class="link-title">Join us in NYC for our Leadership Summit</p>
+        <p class="link-desc">Help us build a 10,000 strong movement to shut down Marshall BioResources</p>
+      </a>
+    </section>
 
-      <a class="link-card link-card--featured link-card--essays" href="https://essays.adityaaswani.com" target="_blank" rel="noopener noreferrer">
-        <span class="featured-badge featured-badge--new">New post</span>
-        <p class="link-title">Read or listen to my latest essay</p>
-        <p class="link-desc">Essays on animal liberation, contemplative practice, and more</p>
+    <section class="link-section" style="--delay: 0.2s">
+      <a class="link-card" href="https://essays.adityaaswani.com" target="_blank" rel="noopener noreferrer">
+        <p class="link-title">Subscribe (for free) to my blog</p>
+        <p class="link-desc">Read or listen to my essays on animal liberation and mindfulness</p>
       </a>
 
       <a class="link-card" href="https://savethedogs.io" target="_blank" rel="noopener noreferrer">
@@ -43,7 +48,7 @@ import Layout from '../layouts/Layout.astro';
       </a>
     </section>
 
-    <section class="link-section" style="--delay: 0.2s">
+    <section class="link-section" style="--delay: 0.3s">
       <h2 class="section-label">Other projects</h2>
 
       <a class="link-card" href="https://www.contemplativesemester.org/" target="_blank" rel="noopener noreferrer">
@@ -57,7 +62,7 @@ import Layout from '../layouts/Layout.astro';
       </a>
     </section>
 
-    <section class="link-section" style="--delay: 0.3s">
+    <section class="link-section" style="--delay: 0.4s">
       <h2 class="section-label">Follow me elsewhere</h2>
 
       <div class="social-grid">
@@ -112,7 +117,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <section class="subscribe-section" style="--delay: 0.4s">
+    <section class="subscribe-section" style="--delay: 0.5s">
       <p class="subscribe-title">Get my essays by email</p>
       <p class="subscribe-desc">No spam. Unsubscribe anytime.</p>
       <div class="substack-wrapper">
@@ -126,7 +131,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <footer class="lp-footer" style="--delay: 0.5s">
+    <footer class="lp-footer" style="--delay: 0.6s">
       <p>May all beings be happy, healthy, and safe.</p>
       <p><a href="https://adityaaswani.com">adityaaswani.com</a></p>
     </footer>
@@ -416,8 +421,8 @@ import Layout from '../layouts/Layout.astro';
     color: #92400e;
     background: rgba(217, 119, 6, 0.12);
     border: 0.5px solid rgba(217, 119, 6, 0.35);
-    border-radius: 4px;
-    padding: 2px 7px;
+    border-radius: 100px;
+    padding: 2px 9px;
     margin-bottom: 0.5rem;
   }
 
